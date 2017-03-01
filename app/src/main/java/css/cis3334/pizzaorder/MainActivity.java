@@ -1,5 +1,6 @@
 package css.cis3334.pizzaorder;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +10,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements updateViewInterface {
+public class MainActivity extends AppCompatActivity  {
 
     RadioButton rbSmall;
     RadioButton rbMedium;
@@ -19,7 +20,6 @@ public class MainActivity extends AppCompatActivity implements updateViewInterfa
     TextView txtTotal;
     TextView txtStatus;
     Spinner spinnerToppings;
-    PizzaOrderInterface pizzaOrderSystem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +36,6 @@ public class MainActivity extends AppCompatActivity implements updateViewInterfa
         txtTotal = (TextView) findViewById(R.id.textViewTotal);
         txtStatus = (TextView) findViewById(R.id.textViewStatus);
         spinnerToppings = (Spinner) findViewById(R.id.spinnerToppings);
-        pizzaOrderSystem = new PizzaOrder(this);
-    }
-
-    @Override
-    public void updateView(String orderStatus) {
-
-        txtStatus.setText("Order Status" + orderStatus);
     }
 
     public void onClickOrder(View view) {
@@ -54,9 +47,10 @@ public class MainActivity extends AppCompatActivity implements updateViewInterfa
         if (rbMedium.isChecked()) {
             size = "medium";
         }
-        String orderDescription = pizzaOrderSystem.OrderPizza(topping, size, chkbxCheese.isChecked());
-        //display a pop up message for a long period of time
-        Toast.makeText(getApplicationContext(), "You have ordered a "+orderDescription , Toast.LENGTH_LONG).show();
-        txtTotal.setText("Total Due: " + pizzaOrderSystem.getTotalBill().toString());
+        Pizza orderedPizza = new Pizza(topping, size, chkbxCheese.isChecked());
+        // Call the pizza activity using an intent
+        Intent detailActIntent = new Intent(this, PizzaActivity.class);
+        detailActIntent.putExtra("orderedPizza", orderedPizza);
+        startActivity(detailActIntent);
     }
 }

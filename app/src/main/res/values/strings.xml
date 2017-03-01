@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PizzaOrder</string>
+    <string name="app_name">Pizza Order with Two Activities</string>
     <string name="small_pizza">Small Pizza</string>
     <string name="mediumpizza">MediumPizza</string>
     <string name="large_pizza">Large Pizza</string>
